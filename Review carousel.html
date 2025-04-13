@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>review carousel</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0%;
+        padding: 0%;
+      }
+
+      .container {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .container .child-container {
+        border: 1px solid black;
+        width: 60%;
+        height: 60%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .container .child-container img {
+        width: 6rem;
+        height: 6rem;
+        border: none;
+        border-radius: calc(100%);
+      }
+
+      .container .child-container h1,
+      h2 {
+        text-transform: capitalize;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: #000;
+        font-size: 1.2rem;
+      }
+
+      .container .child-container h2 {
+        font-size: 1.2rem;
+        color: aqua;
+      }
+
+      .container .child-container p {
+        font-size: 13px;
+        width: 35rem;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .container .child-container .btnRight,
+      .btnLeft {
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 10px;
+      }
+
+      .container .child-container button {
+        border: none;
+        width: 8rem;
+        height: 2rem;
+        border-radius: 2px;
+        cursor: pointer;
+        background-color: aquamarine;
+        color: black;
+        text-transform: capitalize;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="child-container">
+        <img
+          src="https://media.istockphoto.com/id/1311084168/photo/overjoyed-pretty-asian-woman-look-at-camera-with-sincere-laughter.webp?b=1&s=170667a&w=0&k=20&c=XPuGhP9YyCWquTGT-tUFk6TwI-HZfOr1jNkehKQ17g0="
+          alt="user-img"
+        />
+        <h1>aayushi</h1>
+        <h2>infuencer</h2>
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae dolores
+          ratione iure quisquam nostrum, quas dicta quis sequi cum aperiam ad,
+          suscipit animi eos autem nemo. Quam at harum obcaecati.
+        </p>
+        <div class="btn">
+          <i class="ri-arrow-left-line btnLeft"></i>
+          <i class="ri-arrow-right-line btnRight"></i>
+        </div>
+        <button type="button" id="btn">surprise me</button>
+      </div>
+    </div>
+
+
+    <script>
+      let user = [
+        {
+          img:"https://media.istockphoto.com/id/1311084168/photo/overjoyed-pretty-asian-woman-look-at-camera-with-sincere-laughter.webp?b=1&s=170667a&w=0&k=20&c=XPuGhP9YyCWquTGT-tUFk6TwI-HZfOr1jNkehKQ17g0=",
+          name: "aayushi",
+          job: "infuencer",
+          info: `Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae dolores ratione iure quisquam nostrum,
+                quas dicta quis sequi cum aperiam ad, suscipit animi eos autem nemo. Quam at harum obcaecati.`,
+        },
+        {
+          img: "https://media.istockphoto.com/id/1208715213/photo/woman-in-grocery-aisle-of-supermarket.webp?b=1&s=170667a&w=0&k=20&c=lJXuVzhLGHBuVGrRNjPGypjB_wxE6CvaUWaWY6CrgH0=",
+          name: "shuruti",
+          job: "web developer",
+          info: `orem ipsum, dolor sit amet consectetur adipisicing elit. Quae dolores ratione iure quisquam nostrum,
+                quas dicta quis sequi cum aperiam ad, suscipit animi eos autem nemo. Quam at harum obcaecati.`,
+        },
+        {
+          img: "https://media.istockphoto.com/id/1124239071/photo/happy-businesswoman-stock-image.webp?b=1&s=170667a&w=0&k=20&c=uc9NLZhrZdyVrjsBbiibtm8aZVO_IdchC0MwzVivAfk=",
+          name: "priya",
+          job: "softawer engineer",
+          info: `orem ipsum, dolor sit amet consectetur adipisicing elit. Quae dolores ratione iure quisquam nostrum,
+                quas dicta quis sequi cum aperiam ad, suscipit animi eos autem nemo. Quam at harum obcaecati.`,
+        },
+        {
+          img: "https://plus.unsplash.com/premium_photo-1701108264712-7fe632886afb?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2xpZW50JTIwcGhvdG98ZW58MHx8MHx8fDA%3D",
+          name: "dimpal",
+          job: "app developer",
+          info: `orem ipsum, dolor sit amet consectetur adipisicing elit. Quae dolores ratione iure quisquam nostrum,
+                quas dicta quis sequi cum aperiam ad, suscipit animi eos autem nemo. Quam at harum obcaecati.`,
+        },
+      ];
+
+      const imgparson = document.querySelector("img");
+      const parsonName = document.querySelector("h1");
+      const position = document.querySelector("h2");
+      const comment = document.querySelector("p");
+      const btnRight = document.querySelector(".btnRight");
+      const btnleft = document.querySelector(".btnLeft");
+      const btn = document.querySelector("#btn");
+      const btnB = document.querySelectorAll("i");
+
+      btn.addEventListener("click",()=>{
+        const random=Math.floor(Math.random() * user.length);
+        imgparson.src=user[random].img
+        parsonName.innerHTML=user[random].name
+        position.innerHTML=user[random].job
+        comment.innerHTML=user[random].info
+        console.log(random);
+      });
+      let count=0;
+      btnRight.addEventListener("click",()=>{
+        count++
+        if (count >=user.length) {
+            count=0;
+        }
+        imgparson.src=user[count].img
+        parsonName.innerHTML=user[count].name
+        position.innerHTML=user[count].job
+        comment.innerHTML=user[count].info
+        console.log(count);
+
+
+      })
+      btnleft.addEventListener("click",()=>{
+        count--
+        if (count < 0) {
+            count=user.length;
+        }
+        imgparson.src=user[count].img
+        parsonName.innerHTML=user[count].name
+        position.innerHTML=user[count].job
+        comment.innerHTML=user[count].info
+        console.log(count);
+
+
+      })
+
+   
+    </script>
+  </body>
+</html>

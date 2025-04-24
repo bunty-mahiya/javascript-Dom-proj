@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR converter</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container{
+            width: 100%;
+            height: 100vh;
+            border: 1px solid black;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            justify-content: center;
+            flex-direction: column;
+            background-color: rgb(151, 71, 71);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="text">
+        <button  class=" btn"t ype="button">convert QR</button>
+        <img src="" alt="" srcset="">
+    </div>
+    
+    <script>
+        let input=document.querySelector("input");
+        let btn=document.querySelector(".btn");
+        let img=document.querySelector("img");
+    
+        btn.addEventListener("click",()=>{ 
+            let name=input.value;
+            let data=`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${name}`
+            img.src=data; 
+        })
+
+
+
+    </script>
+</body>
+</html>

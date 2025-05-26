@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+      }
+      #main {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .weather {
+        width: 28vw;
+        height: 85vh;
+        border: 1px solid black;
+        padding: 4px 4px 0px 4px;
+        border-radius: 30px;
+        display: flex;
+        gap: 13px 10px;
+        align-items: center;
+        flex-direction: column;
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
+      }
+      .input {
+        border-radius: 10px;
+        background-color: black;
+        color: white;
+        text-transform: capitalize;
+        font-weight: 600;
+        text-indent: 10%;
+        margin-top: 10px;
+      }
+      .btn {
+        width: 6vw;
+        height: 5vh;
+        text-transform: capitalize;
+        border: none;
+        box-shadow: 0px 2px 2px 0px black;
+        cursor: pointer;
+        border-radius: 5px;
+        color: black;
+        background-color: rgba(59, 143, 199, 0.808);
+      }
+      .child-1 {
+        width: 12vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 28vh;
+        gap: 10px;
+        margin: 50px;
+        font-weight: bold;
+      }
+      .child-2 {
+        width: 100%;
+        height: 10vh;
+        display: flex;
+        font-size: 1rem;
+        text-transform: capitalize;
+        justify-content: space-around;
+      }
+      .child-3 {
+        width: 100%;
+        height: 10vh;
+        display: flex;
+        justify-content: space-around;
+        font-size: 1.2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main">
+      <div class="weather">
+        <input class="input" type="text" placeholder="Delhi" />
+        <button class="btn">search</button>
+        <div class="child-1">
+          <img src="" alt="weather img" />
+          <h1></h1>
+          <h3></h3>
+        </div>
+        <div class="child-2">
+          <span
+            ><i style="font-size: 1.4rem" class="ri-sun-cloudy-line"></i>
+            <p>sunrise time</p></span
+          >
+          <span
+            ><i style="font-size: 1.4rem" class="ri-sun-cloudy-fill"></i>
+            <p>sunset time</p></span
+          >
+          <span
+            ><i style="font-size: 1.4rem" class="ri-building-line"></i>
+            <p>country name</p></span
+          >
+        </div>
+        <div class="child-3">
+          <span class="sunrise"> </span>
+          <span class="sunset"> </span>
+          <span class="country"></span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let img = document.querySelector("img");
+      let tem = document.querySelector("h1");
+      let text = document.querySelector("h3");
+      let src = "https://openweathermap.org/img/wn/{iconCode}@2x.png";
+      // let api="https://api.openweathermap.org/data/2.5/weather?q=delhi&appid=d1845658f92b31c64bd94f06f7188c9c"
+      let search = document.querySelector(".input");
+      let btn = document.querySelector(".btn");
+      let base = "https://api.openweathermap.org/data/2.5/weather?q=";
+      let city;
+      let apikey = "d1845658f92b31c64bd94f06f7188c9c";
+      let og_url = `${base} ${city}&appid=${apikey}`;
+      let sunrise = document.querySelector(".sunrise");
+      let sunset = document.querySelector(".sunset");
+      let country = document.querySelector(".country");
+      alert("please enter the city name");
+
+      async function getData(city = "delhi") {
+        try {
+          og_url = `${base} ${city}&appid=${apikey}`;
+          let rdata = await fetch(og_url);
+          let data = await rdata.json();
+          return {
+            img: data.weather[0].icon,
+            text: data.weather[0].description,
+            tem: data.main.feels_like - 273.15,
+            sunri: data.sys.sunrise,
+            sunt: data.sys.sunset,
+            country: data.sys.country,
+            data: data,
+          };
+        } catch (erro) {
+          throw new Error("opps sorry");
+        }
+      }
+      function fun() {
+        getData(city)
+          .then((data) => {
+            let iconCode = data.img;
+            let src = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+            img.src = src;
+            let tems = Math.floor(data.tem);
+            tem.textContent = `${tems}'C`;
+            text.textContent = data.text;
+            let sunriseDate = new Date(data.sunri * 1000);
+            let sunriseTime = sunriseDate.toLocaleTimeString();
+            let sunsetDate = new Date(data.sunt * 1000);
+            let sunsetTime = sunsetDate.toLocaleTimeString();
+            sunset.textContent = sunsetTime;
+            sunrise.textContent = sunriseTime;
+            country.textContent = data.country;
+            console.log(data.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      fun();
+      btn.addEventListener("click", () => {
+        city = search.value;
+        fun();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>to-do-List</title>
+ <style>
+      * {
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        padding-top: 50px;
+      }
+
+      .main {
+        background-color: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 350px;
+        text-align: center;
+      }
+
+      input {
+        padding: 10px;
+        width: 80%;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+      }
+
+      button {
+        padding: 8px 12px;
+        margin: 5px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .btn {
+        background-color: #4caf50;
+        color: white;
+      }
+
+      .reset {
+        background-color: #f44336;
+        color: white;
+      }
+
+      h1 {
+        background-color: #e7f3ff;
+        border: 1px solid #cce0ff;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 8px;
+        font-size: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      h1 button {
+        background-color: #ff6b6b;
+        color: white;
+        font-size: 12px;
+        padding: 5px 10px;
+      }
+
+      span {
+        display: block;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <h2>My To-Do List</h2>
+      <input type="text" placeholder="Enter your task" />
+      <br />
+      <button class="btn" type="button">Add Task</button>
+      <button class="reset" type="button">Reset</button>
+      <span></span>
+    </div>
+
+    <script>
+      let input = document.querySelector("input");
+      let btn = document.querySelector(".btn");
+      let span = document.querySelector("span");
+      let reset = document.querySelector(".reset");
+      btn.addEventListener("click", () => {
+        create();
+      });
+      input.addEventListener("keydown",(event)=>{
+        if (event.key =="Enter") {
+            create()    
+        }
+      })
+     
+
+      function create() {
+        if (input.value !== "") {
+          let h1 = document.createElement("h1");
+          h1.textContent = input.value;
+          let dele = document.createElement("button");
+          dele.textContent = "delete";
+          h1.append(dele);
+          span.append(h1);
+          dele.addEventListener("click", () => {
+            dele.parentElement.remove();
+            localStorage.setItem("key", span.innerHTML);  // save the updated list to LocalStorage
+          });
+          input.value = ""; //  clear the input box after adding the task
+          localStorage.setItem("key", span.innerHTML); // set/save value in localstorage
+        }
+      }
+      // let rev = localStorage.getItem("key");
+      // get value mean show in browser when we refresh so at that time our value store local storage
+      //   span.innerHTML=rev
+       
+      // get the value  frome localStorage when we reload web so never remove add task in list 
+      // after reload process
+      function get() {
+        let rev = localStorage.getItem("key"); // get the saved task list from localStorage
+        span.innerHTML = rev; //Show the saved tasks inside the span
+        let allDeletebtnACC = span.querySelectorAll("button"); // Find all delete buttons inside the span.
+        allDeletebtnACC.forEach((ele) => {    // For each delete button: make it remove its task and update localStorage.
+          ele.addEventListener("click", () => {
+            ele.parentElement.remove();
+            localStorage.setItem("key", span.innerHTML);
+          });
+        });
+      }
+      get(); //Run the get() function when the page loads, so old tasks appear.
+      reset.addEventListener("click", () => {
+        localStorage.clear();
+        span.innerHTML = ""; //Clear the saved tasks from localStorage.Also clear them from the screen.
+
+
+      });
+    </script>
+  </body>
+</html>
